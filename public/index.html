@@ -46,6 +46,10 @@
         <form id="electricityForm" class="grid grid-cols-4 gap-4">
 
             <div>
+                <label class="block mb-2">Device Name</label>
+                <input type="text" id="deviceName" class="w-full border rounded-lg p-2" required>
+            </div>
+            <div>
                 <label class="block mb-2"> Power (W)</label>
                 <input type="number" id="power" class="w-full border rounded-lg p-2" required>
             </div>
@@ -107,20 +111,13 @@
 
             e.preventDefault();
 
-            const power =
-            parseFloat(
-                document.getElementById('power').value
-            );
+            const deviceName = document.getElementById('deviceName').value;
 
-            const hours =
-            parseFloat(
-                document.getElementById('hours').value
-            );
+            const power = parseFloat(document.getElementById('power').value);
 
-            const rate =
-            parseFloat(
-                document.getElementById('rate').value
-            );
+            const hours = parseFloat(document.getElementById('hours').value);
+
+            const rate = parseFloat(document.getElementById('rate').value);
 
             const res = await fetch('/calculate', {
 
@@ -131,9 +128,12 @@
                 },
 
                 body: JSON.stringify({
-                    power,
-                    hours,
-                    rate
+                    rate,
+                    devices: [{
+                        name: deviceName,
+                        power: power,
+                        hours: hours
+                    }]
                 })
 
             });
@@ -143,13 +143,13 @@
             if(res.ok){
 
                 document.getElementById('energy')
-                .textContent = data.energy;
+                .textContent = data.summary.totalUsage;
 
                 document.getElementById('cost')
-                .textContent = data.cost;
+                .textContent = data.summary.totalCost;
 
                 document.getElementById('powerDisplay')
-                .textContent = data.power;
+                .textContent = data.summary.totalPower;
 
                 document.getElementById('result')
                 .classList.remove('hidden');
