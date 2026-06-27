@@ -1,170 +1,202 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electricity Dashboard</title>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Electricity Dashboard</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
 
-<body class="bg-gray-100 p-6">
+    <body class="bg-gray-100 p-6">
 
-    <!-- Header -->
-    <section class="grid grid-cols-3 items-center mb-10">
+        <!-- Header -->
+        <section class="grid grid-cols-3 items-center mb-10">
 
-        <div>
-            <h1 class="text-2xl font-semibold">
-                My Home
-            </h1>
-            <p class="text-lg mt-2">
-                Electricity Dashboard
-            </p>
-        </div>
+            <div>
+                <h1 class="text-2xl font-semibold">
+                    My Home
+                </h1>
+                <p class="text-lg mt-2">
+                    Electricity Dashboard
+                </p>
+            </div>
 
-        <div class="text-center">
-            <h2 class="text-4xl font-semibold">
-                Welcome Home!
+            <div class="text-center">
+                <h2 class="text-4xl font-semibold">
+                    Welcome Home!
+                </h2>
+            </div>
+
+            <div class="justify-self-end flex items-center gap-3">
+                <h3 class="text-2xl font-semibold text-right">
+                    Outdoor Temperature
+                </h3>
+                <div class="bg-blue-500 text-white rounded-lg px-3 py-1 text-center text-lg">
+                    <span id="temperature">Loading...</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Input Form -->
+        <section class="bg-white border rounded-xl p-6 mb-10">
+
+            <h2 class="text-2xl font-semibold mb-6">
+                Electricity Calculator
             </h2>
-        </div>
 
-        <div class="justify-self-end grid grid-cols-2 items-center gap-4">
-            <h3 class="text-2xl font-semibold text-center">
-                Outdoor Temperature
-            </h3>
-            <div class="bg-blue-500 text-white rounded-xl px-6 py-3 text-center text-2xl">
-                30°C
-            </div>
-        </div>
+            <form id="electricityForm" class="grid grid-cols-4 gap-4">
 
-    </section>
+                <div>
+                    <label class="block mb-2">Device Name</label>
+                    <input type="text" id="deviceName" class="w-full border rounded-lg p-2" required>
+                </div>
+                <div>
+                    <label class="block mb-2"> Power (W)</label>
+                    <input type="number" id="power" class="w-full border rounded-lg p-2" required>
+                </div>
 
-    <!-- Input Form -->
-    <section class="bg-white border rounded-xl p-6 mb-10">
+                <div>
+                    <label class="block mb-2"> Hours Used </label>
+                    <input type="number" id="hours" class="w-full border rounded-lg p-2" required>
+                </div>
 
-        <h2 class="text-2xl font-semibold mb-6">
-            Electricity Calculator
-        </h2>
+                <div>
+                    <label class="block mb-2"> Rate (cents/kWh) </label>
+                    <input type="number" id="rate" step="0.0001" class="w-full border rounded-lg p-2" required>
+                </div>
 
-        <form id="electricityForm" class="grid grid-cols-4 gap-4">
+                <div>
+                    <label class="block mb-2">Device Name</label>
+                    <input type="text" id="deviceName" class="w-full border rounded-lg p-2" required>
+                </div>
+                <div>
+                    <label class="block mb-2"> Power (W)</label>
+                    <input type="number" id="power" class="w-full border rounded-lg p-2" required>
+                </div>
 
-            <div>
-                <label class="block mb-2">Device Name</label>
-                <input type="text" id="deviceName" class="w-full border rounded-lg p-2" required>
-            </div>
-            <div>
-                <label class="block mb-2"> Power (W)</label>
-                <input type="number" id="power" class="w-full border rounded-lg p-2" required>
-            </div>
+                <div>
+                    <label class="block mb-2"> Hours Used </label>
+                    <input type="number" id="hours" class="w-full border rounded-lg p-2" required>
+                </div>
 
-            <div>
-                <label class="block mb-2"> Hours Used </label>
-                <input type="number" id="hours" class="w-full border rounded-lg p-2" required>
-            </div>
+                <div>
+                    <label class="block mb-2"> Rate (cents/kWh) </label>
+                    <input type="number" id="rate" step="0.0001" class="w-full border rounded-lg p-2" required>
+                </div>
+                
+                <div class="self-end">
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
+                        Calculate
+                    </button>
+                </div>
 
-            <div>
-                <label class="block mb-2"> Rate (cents/kWh) </label>
-                <input type="number" id="rate" step="0.0001" class="w-full border rounded-lg p-2" required>
-            </div>
+            </form>
 
-            <div class="self-end">
-                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
-                    Calculate
-                </button>
-            </div>
+        </section>
 
-        </form>
+        <!-- Results -->
+        <section id="result" class="hidden grid grid-cols-3 gap-6 mb-10">
+            <div class="bg-white border rounded-xl p-6">
+                <h3 class="text-center text-xl mb-4"> Total Energy Used </h3>
+                <div class="text-center text-3xl font-semibold">
+                    <span id="energy"></span>
+                    kWh
+                </div>
 
-    </section>
-
-    <!-- Results -->
-    <section id="result" class="hidden grid grid-cols-3 gap-6 mb-10">
-        <div class="bg-white border rounded-xl p-6">
-            <h3 class="text-center text-xl mb-4"> Total Energy Used </h3>
-            <div class="text-center text-3xl font-semibold">
-                <span id="energy"></span>
-                kWh
-            </div>
-
-        </div>
-
-        <div class="bg-white border rounded-xl p-6">
-            <h3 class="text-center text-xl mb-4"> Total Cost SGD </h3>
-            <div class="text-center text-3xl font-semibold">
-                $
-                <span id="cost"></span>
             </div>
 
-        </div>
+            <div class="bg-white border rounded-xl p-6">
+                <h3 class="text-center text-xl mb-4"> Total Cost SGD </h3>
+                <div class="text-center text-3xl font-semibold">
+                    $
+                    <span id="cost"></span>
+                </div>
 
-        <div class="bg-white border rounded-xl p-6">
-            <h3 class="text-center text-xl mb-4"> Total Power </h3>
-            <div class="text-center text-3xl font-semibold">
-                <span id="powerDisplay"></span>
-                kW
             </div>
 
-        </div>
+            <div class="bg-white border rounded-xl p-6">
+                <h3 class="text-center text-xl mb-4"> Total Power </h3>
+                <div class="text-center text-3xl font-semibold">
+                    <span id="powerDisplay"></span>
+                    kW
+                </div>
 
-    </section>
+            </div>
 
-    <script>
+        </section>
 
-        document.getElementById('electricityForm').addEventListener('submit', async function(e){
+        <script>
+            async function getSingaporeTemperature() {
 
-            e.preventDefault();
+                try {
+                    const res = await fetch("https://api.data.gov.sg/v1/environment/air-temperature");
+                    const data = await res.json();
+                    const temp = data.items[0].readings[0].value;
+                    document.getElementById("temperature").textContent = temp;
+                } catch (error) {
+                      
+                    document.getElementById("temperature").textContent =
+                    "N/A";
 
-            const deviceName = document.getElementById('deviceName').value;
+                }
+    
+            }
 
-            const power = parseFloat(document.getElementById('power').value);
+            getSingaporeTemperature();
 
-            const hours = parseFloat(document.getElementById('hours').value);
+            document.getElementById('electricityForm').addEventListener('submit', async function(e){
 
-            const rate = parseFloat(document.getElementById('rate').value);
+                e.preventDefault();
 
-            const res = await fetch('/calculate', {
+                const deviceName = document.getElementById('deviceName').value;
 
-                method: 'POST',
+                const power = parseFloat(document.getElementById('power').value);
 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                const hours = parseFloat(document.getElementById('hours').value);
 
-                body: JSON.stringify({
-                    rate,
-                    devices: [{
-                        name: deviceName,
-                        power: power,
-                        hours: hours
-                    }]
-                })
+                const rate = parseFloat(document.getElementById('rate').value);
+
+                const res = await fetch('/calculate', {
+
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+
+                    body: JSON.stringify({
+                        rate,
+                        devices: [{
+                            name: deviceName,
+                            power: power,
+                            hours: hours
+                        }]
+                    })
+
+                });
+
+                const data = await res.json();
+
+                if(res.ok){
+
+                    document.getElementById('energy')
+                    .textContent = data.summary.totalUsage;
+
+                    document.getElementById('cost')
+                    .textContent = data.summary.totalCost;
+
+                    document.getElementById('powerDisplay')
+                    .textContent = data.summary.totalPower;
+
+                    document.getElementById('result')
+                    .classList.remove('hidden');
+
+                }
 
             });
 
-            const data = await res.json();
-
-            if(res.ok){
-
-                document.getElementById('energy')
-                .textContent = data.summary.totalUsage;
-
-                document.getElementById('cost')
-                .textContent = data.summary.totalCost;
-
-                document.getElementById('powerDisplay')
-                .textContent = data.summary.totalPower;
-
-                document.getElementById('result')
-                .classList.remove('hidden');
-
-            }
-
-        });
-
-    </script>
-
-
-
-
-</body>
-</html>
+        </script>
+    </body>
+    </html>
