@@ -97,6 +97,14 @@ app.delete('/calculations/:id', (req, res) => {
     });
 });
 
+app.put('/calculations', (req, res) => {
+  const { id, updates } = req.body;
+  const index = calculations.findIndex(calc => calc.id === id);
+  if (index === -1) return res.status(404).json({ error: 'Calculation not found' });
+  calculations[index] = { ...calculations[index], ...updates };
+  res.json(calculations[index]);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
