@@ -69,23 +69,23 @@
 
                 <div>
                     <label class="block mb-2">Device Name</label>
-                    <input type="text" id="deviceName" class="w-full border rounded-lg p-2" required>
+                    <input type="text" id="deviceName2" class="w-full border rounded-lg p-2" required>
                 </div>
                 <div>
                     <label class="block mb-2"> Power (W)</label>
-                    <input type="number" id="power" class="w-full border rounded-lg p-2" required>
+                    <input type="number" id="power2" class="w-full border rounded-lg p-2" required>
                 </div>
 
                 <div>
                     <label class="block mb-2"> Hours Used </label>
-                    <input type="number" id="hours" class="w-full border rounded-lg p-2" required>
+                    <input type="number" id="hours2" class="w-full border rounded-lg p-2" required>
                 </div>
 
                 <div>
                     <label class="block mb-2"> Rate (cents/kWh) </label>
-                    <input type="number" id="rate" step="0.0001" class="w-full border rounded-lg p-2" required>
+                    <input type="number" id="rate2" step="0.0001" class="w-full border rounded-lg p-2" required>
                 </div>
-                
+
                 <div class="self-end">
                     <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">
                         Calculate
@@ -158,6 +158,14 @@
 
                 const rate = parseFloat(document.getElementById('rate').value);
 
+                const deviceName2 = document.getElementById('deviceName2').value;
+
+                const power2 = parseFloat(document.getElementById('power2').value);
+
+                const hours2 = parseFloat(document.getElementById('hours2').value);
+
+                const rate2 = parseFloat(document.getElementById('rate2').value);
+
                 const res = await fetch('/calculate', {
 
                     method: 'POST',
@@ -172,6 +180,11 @@
                             name: deviceName,
                             power: power,
                             hours: hours
+                        },
+                        {
+                            name: deviceName2,
+                            power: power2,
+                            hours: hours2
                         }]
                     })
 
